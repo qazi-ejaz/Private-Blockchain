@@ -1,7 +1,6 @@
 # Private Blockchain Application
 
-You are starting your journey as a Blockchain Developer, this project allows you to demonstrate
-that you are familiarized with the fundamentals concepts of a Blockchain platform.
+This project demonstrate familiarization with the fundamentals concepts of a Blockchain platform.
 Concepts like:
 
     - Block
@@ -10,15 +9,9 @@ Concepts like:
     - Blockchain Identity
     - Proof of Existance
 
-Are some of the most important components in the Blockchain Framework that you will need to describe and also
-why not? Implement too.
+## What problem is solved through the implementation of this private Blockchain application?
 
-In this project you will have a boilerplate code with a REST Api already setup to expose some of the functionalities
-you will implement in your private blockchain.
-
-## What problem will you solve implementing this private Blockchain application?
-
-Your employer is trying to make a test of concept on how a Blockchain application can be implemented in his company.
+An employer is trying to make a test of concept on how a Blockchain application can be implemented in his company.
 He is an astronomy fans and he spend most of his free time on searching stars in the sky, that's why he would like
 to create a test application that will allows him to register stars, and also some others of his friends can register stars
 too but making sure the application know who owned each star.
@@ -42,13 +35,12 @@ too but making sure the application know who owned each star.
 7. The application will allow us to retrieve the Star objects belong to an owner (wallet address). 
 
 
-## What tools or technologies you will use to create this application?
+## Tools and Technologies used
 
-- This application will be created using Node.js and Javascript programming language. The architecture will use ES6 classes
-because it will help us to organize the code and facilitate the maintnance of the code.
-- The company suggest to use Visual Studio Code as an IDE to write your code because it will help you debug the code easily
-but you can choose the code editor you feel confortable with.
-- Some of the libraries or npm modules you will use are:
+- This application is created using Node.js and Javascript programming language. The architecture uses ES6 classes
+because it helps to organize the code and facilitate the maintnance of the code.
+- Visual Studio Code as an IDE to write Private Blockchain code because it will help to debug the code easily
+- Some of the libraries or npm modules used are:
     - "bitcoinjs-lib": "^4.0.3",
     - "bitcoinjs-message": "^2.0.0",
     - "body-parser": "^1.18.3",
@@ -66,25 +58,13 @@ Libraries purpose:
 4. `crypto-js` This module contain some of the most important cryotographic methods and will help us to create the block hash.
 5. `hex2ascii` This library will help us to **decode** the data saved in the body of a Block.
 
-## Understanding the boilerplate code
+## Understanding the Code
 
-The Boilerplate code is a simple architecture for a Blockchain application, it includes a REST APIs application to expose the your Blockchain application methods to your client applications or users.
+The code is a simple architecture for a Blockchain application, it includes a REST APIs application to expose the Blockchain application methods to the client applications or users.
 
-1. `app.js` file. It contains the configuration and initialization of the REST Api, the team who provide this boilerplate code suggest do not change this code because it is already tested and works as expected.
-2. `BlockchainController.js` file. It contains the routes of the REST Api. Those are the methods that expose the urls you will need to call when make a request to the application.
-3. `src` folder. In here we are going to have the main two classes we needed to create our Blockchain application, we are going to create a `block.js` file and a `blockchain.js` file that will contain the `Block` and `BlockChain` classes.
-
-### Starting with the boilerplate code:
-
-First thing first, we are going to download or clone our boilerplate code.
-
-Then we need to install all the libraries and module dependencies, to do that: open a terminal and run the command `npm install`
-
-**( Remember to be able to work on this project you will need to have installed in your computer Node.js and npm )**
-
-At this point we are ready to run our project for first time, use the command: `node app.js`
-
-You can check in your terminal the the Express application is listening in the PORT 8000
+1. `app.js` file. It contains the configuration and initialization of the REST Api.
+2. `BlockchainController.js` file. It contains the routes of the REST Api. Those are the methods that expose the urls needed to call when making a request to the application.
+3. `src` folder. It has the main two classes needed to create Blockchain application.
 
 ## What do I need to implement to satisfy my employer requirements?
 
@@ -183,10 +163,9 @@ You can check in your terminal the the Express application is listening in the P
 
 ## How to test your application functionalities?
 
-To test your application I recommend you to use POSTMAN, this tool will help you to make the requests to the API.
-Always is useful to debug your code see what is happening in your algorithm, so I will let you this video for you to check on how to do it >https://www.youtube.com/watch?v=6cOsxaNC06c . Try always to debug your code to understand what you are doing.
+To test this application [POSTMAN](https://www.postman.com/) is recommended, to make the requests to the API.
 
-1. Run your application using the command `node app.js`
+1. Run the application using the command `node app.js`
 You should see in your terminal a message indicating that the server is listening in port 8000:
 > Server Listening for port: 8000
 
