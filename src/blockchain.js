@@ -1,11 +1,9 @@
 /**
  *                          Blockchain Class
- *  The Blockchain class contain the basics functions to create your own private blockchain
+ *  The Blockchain class contain the basics functions to create private blockchain
  *  It uses libraries like `crypto-js` to create the hashes for each block and `bitcoinjs-message` 
- *  to verify a message signature. The chain is stored in the array
- *  `this.chain = [];`. Of course each time you run the application the chain will be empty because and array
- *  isn't a persisten storage method.
- *  
+ *  to verify a message signature. The chain is stored in the array `this.chain = [];`.
+ * 
  */
 
 const SHA256 = require('crypto-js/sha256');
@@ -16,10 +14,6 @@ const bitcoinMessage = require('bitcoinjs-message');
 class Blockchain {
 
     /**
-     * Constructor of the class, you will need to setup your chain array and the height
-     * of your chain (the length of your chain array).
-     * Also everytime you create a Blockchain class you will need to initialized the chain creating
-     * the Genesis Block.
      * The methods in this class will always return a Promise to allow client applications or
      * other backends to call asynchronous functions.
      */
@@ -31,8 +25,6 @@ class Blockchain {
 
     /**
      * This method will check for the height of the chain and if there isn't a Genesis Block it will create it.
-     * You should use the `addBlock(block)` to create the Genesis Block
-     * Passing as a data `{data: 'Genesis Block'}`
      */
     async initializeChain() {
         if (this.height === -1) {
@@ -55,10 +47,6 @@ class Blockchain {
      * @param {*} block 
      * The method will return a Promise that will resolve with the block added
      * or reject if an error happen during the execution.
-     * You will need to check for the height to assign the `previousBlockHash`,
-     * assign the `timestamp` and the correct `height`...At the end you need to 
-     * create the `block hash` and push the block into the chain array. Don't for get 
-     * to update the `this.height`
      * Note: the symbol `_` in the method name indicates in the javascript convention 
      * that this method is a private method. 
      */
@@ -81,9 +69,9 @@ class Blockchain {
     }
     /**
      * The requestMessageOwnershipVerification(address) method
-     * will allow you  to request a message that you will use to
-     * sign it with your Bitcoin Wallet (Electrum or Bitcoin Core)
-     * This is the first step before submit your Block.
+     * allows  to request a message that will be used to
+     * sign it with Bitcoin Wallet (Electrum or Bitcoin Core)
+     * This is the first step before submiting the Block.
      * The method return a Promise that will resolve with the message to be signed
      * @param {*} address 
      */
@@ -98,13 +86,6 @@ class Blockchain {
      * will allow users to register a new Block with the star object
      * into the chain. This method will resolve with the Block added or
      * reject with an error.
-     * Algorithm steps:
-     * 1. Get the time from the message sent as a parameter example: `parseInt(message.split(':')[1])`
-     * 2. Get the current time: `let currentTime = parseInt(new Date().getTime().toString().slice(0, -3));`
-     * 3. Check if the time elapsed is less than 5 minutes
-     * 4. Veify the message with wallet address and signature: `bitcoinMessage.verify(message, address, signature)`
-     * 5. Create the block and add it to the chain
-     * 6. Resolve with the block added.
      * @param {*} address 
      * @param {*} message 
      * @param {*} signature 
@@ -117,10 +98,10 @@ class Blockchain {
             let currtime=parseInt(new Date().getTime().toString().slice(0, -3));
             if((currtime - messtime)>=(5*60)) reject(new Error("Too wide time stamp"));
             if(!bitcoinMessage.verify(message, address, signature)) reject(new Error("Unverifiable Identity"));
-            let block=new BlockClass.Block({star});
-            block.owner=address;
-            block=await self._addBlock(block);
-            resolve(block);
+            let block=new BlockClass.Block({ owner: address, star: star});
+            //block.owner=address;
+            let addblock=await this._addBlock(block);
+            resolve(addblock);
         });
     }
 
@@ -168,20 +149,27 @@ class Blockchain {
     getStarsByWalletAddress(address) {
         let self = this;
         let stars = [];
-        this.validateChain().then(errors => typeof errors === 'string' ?  console.log('[SUCCESS] ', errors) : errors.forEach(error => console.log('[ERROR] ', error)));
+        //this.validateChain().then(errors => typeof errors === 'string' ?  console.log('[SUCCESS] ', errors) : errors.forEach(error => console.log('[ERROR] ', error)));
         return new Promise((resolve, reject) => {
-            let mystars=self.chain.filter(block => block.owner === address);
+            self.chain.map(b => {
+                b.getBData().then(data => {
+                    if (data.owner === address) {
+                        stars.push(data)
+                    }
+                });
+            });
+            resolve(stars)
+           /* let mystars=self.chain.filter(block => block.address === address);
             if(mystars.length===0){reject(new Error("Invalid Address"))}
             stars=mystars.map(block => JSON.parse(hex2ascii(block.body)));
             stars ? resolve(stars) : reject(new Error("Stars Not found!"));
+            */
         });
     }
 
     /**
      * This method will return a Promise that will resolve with the list of errors when validating the chain.
      * Steps to validate:
-     * 1. You should validate each block using `validateBlock`
-     * 2. Each Block should check the with the previousBlockHash
      */
     validateChain() {
         let self = this;
@@ -190,12 +178,15 @@ class Blockchain {
             let prevhash=null;
             for (let block of self.chain){
                 const verifyBlock= block.validate();
-                if(!verifyBlock || block.previousBlockHash!==prevhash){
+                if(!verifyBlock){
                     errorLog.push({block,error: "Unverified/Invalid Block!"});
                 }
+                    if(block.previousBlockHash!=prevhash){
+                        errorLog.push(`Broken chain at ${block.height} with hash ${block.hash}`);
+                    }
                 prevhash=block.hash;
             }
-            resolve(errorLog)
+            resolve(errorLog);
         });
     }
 }
