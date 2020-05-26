@@ -1,6 +1,6 @@
 # Private Blockchain
 
-![Image](images/block.gif)
+                    ![Image](images/block.gif)
 
 This project demonstrate familiarization with the fundamentals concepts of a Blockchain platform.
 Concepts like:
