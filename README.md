@@ -1,6 +1,9 @@
 # Private Blockchain
 
-                    ![Image](images/block.gif)
+<p align="center">
+  <img src=images/block.gif alt="Private Blockchain"/>
+</p>
+
 
 This project demonstrate familiarization with the fundamentals concepts of a Blockchain platform.
 Concepts like:
