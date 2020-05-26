@@ -1,5 +1,7 @@
 # Private Blockchain
 
+![Image](images/block.gif)
+
 This project demonstrate familiarization with the fundamentals concepts of a Blockchain platform.
 Concepts like:
 
@@ -87,5 +89,5 @@ You should see in your terminal a message indicating that the server is listenin
 6. Retrieve Stars owned by me
 
 ### Conclusion
-![Request: http://localhost:8000/blocks/<WALLET_ADDRESS>](https://github.com/qazi-ejaz/Private-Blockchain/blob/master/project.gif)
+![Image](images/project.gif)
 
